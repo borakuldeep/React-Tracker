@@ -14,6 +14,12 @@ position: absolute;
 z-index: 600;
 text-align: center;
 `
+
+const slide = keyframes`
+from {margin-left: 50px;}
+to { margin-left: 10px}
+`
+
 const Message = styled.div`
 width: 270px;
   --height: 30px;
@@ -34,10 +40,7 @@ width: 270px;
   text-align: center;
 `
 
-const slide = keyframes`
-from {margin-left: 50px;}
-to { margin-left: 10px}
-`
+
 
 const NotificationHeader = styled.div`
 padding: 3px;
