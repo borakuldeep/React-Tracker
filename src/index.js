@@ -1,10 +1,16 @@
-import react from 'react'
-import reactdom from 'react-dom'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Map from './components/Map.jsx';
 
-class Hello extends react.Component {
+
+class App extends React.Component {
     render() {
-        return <h1> Hello World</h1>
+        return (
+            <React.Fragment>
+                <Map/>
+            </React.Fragment>)
+        
     }
 }
 
-reactdom.render(<Hello/>, document.getElementById('root'));
+ReactDOM.render(<App/>, document.getElementById('root'));
