@@ -2,7 +2,7 @@ import React from 'react'
 import { Map, TileLayer, Marker, Rectangle, Tooltip } from 'react-leaflet'
 import Noti from './NotificationPanel.jsx'
 import Buttons from './Buttons.jsx';
-import styled from 'styled-components'
+import styled, {keyframes} from 'styled-components'
 
 
 let areacount = 0;
@@ -22,6 +22,27 @@ text-align: center;
 font-size: 1.1rem;
 `
 
+const slidedown = keyframes`
+0% {top: -6%; }
+50% { top: 50px; }
+100% { top: -6%; display: none}
+`
+
+const Info = styled.div`
+z-index: 600;
+background: #4d79ff;
+position: absolute;
+left: 40%;
+padding: 5px;
+border-radius: 12px;
+color: white;
+width: 500px;
+text-align: center;
+font-size: 1.1rem;
+top: -6%;
+animation: ${slidedown} 5s;
+`
+
  class LMap extends React.Component {
     constructor() {
         super();
@@ -31,13 +52,16 @@ font-size: 1.1rem;
   { name: "Device 2", lat: 34.8481234, long: 32.6811234 },
   { name: "Device 3", lat: 34.9581234, long: 33.0811234 },
   { name: "Device 4", lat: 35.0681234, long: 33.4811234 },
-  { name: "Device 5", lat: 35.0781234, long: 33.5511234 }
+  { name: "Device 5", lat: 35.0781234, long: 33.5511234 },
+  { name: "Device 6", lat: 34.8111234, long: 32.6111234 },
+  { name: "Device 7", lat: 35.0281234, long: 32.5211234 }
             ],
-            areas: [],
+            areas: [{name: "Area"+areacount, loc:[[34.923097034, 33.03451538], [34.923097034 + 0.1332, 33.03451538+0.1332]]}],
             notifications: [],
             map: '',
             theme: 'light',
-            tile: {mode: "light", url: 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png'}
+            tile: {mode: "light", url: 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png'},
+            
             
         }
         this.sendDeviceUpdates = this.sendDeviceUpdates.bind(this);
@@ -52,7 +76,7 @@ font-size: 1.1rem;
     }
 
     sendDeviceUpdates() {
-        console.log("this.state = ", this.state);
+        //console.log("this.state = ", this.state);
         let devices = JSON.parse(JSON.stringify(this.state.devices));
         
         
@@ -166,7 +190,7 @@ checkCloseness(marker, area) {
   }
 
   createArea(e) {
-      console.log(e.latlng);
+      //console.log(e.latlng);
       areacount += 1;
       let rect = {name: "Area"+areacount, loc:[[e.latlng.lat, e.latlng.lng], [e.latlng.lat + 0.1332, e.latlng.lng+0.1332]]};
       this.setState({areas: [...this.state.areas, rect]});
@@ -179,7 +203,9 @@ checkCloseness(marker, area) {
 { name: "Device 2", lat: 34.8481234, long: 32.6811234 },
 { name: "Device 3", lat: 34.9581234, long: 33.0811234 },
 { name: "Device 4", lat: 35.0681234, long: 33.4811234 },
-{ name: "Device 5", lat: 35.0781234, long: 33.5511234 }
+{ name: "Device 5", lat: 35.0781234, long: 33.5511234 },
+{ name: "Device 6", lat: 34.8111234, long: 32.6111234 },
+  { name: "Device 7", lat: 35.0281234, long: 32.5211234 }
     ]}, () => this.sendDeviceUpdates());
     
 
@@ -204,6 +230,7 @@ checkCloseness(marker, area) {
     return (
       <Map center={position} zoom="10" style={{width: "100%", height: "100vh"}} onContextMenu={this.createArea}>
         <Header>React Tracker Demo <div style={{fontSize: '0.7rem'}}> by Kuldeep Bora</div></Header>
+        <Info> Right click on map to create tracking areas...</Info>
         <TileLayer
           attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url={this.state.tile.url}

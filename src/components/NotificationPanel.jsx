@@ -13,6 +13,9 @@ margin-left: 80%;
 position: absolute;
 z-index: 600;
 text-align: center;
+overflow-x: hidden;
+overflow-y: auto;
+
 `
 
 const slide = keyframes`
@@ -58,7 +61,7 @@ class NotificationPanel extends React.Component {
             <NotificationHeader style={{ background: this.props.theme == 'light' ? 'black' :'white', color: this.props.theme == 'light' ? 'white' :'black'}}> 
                 Notification Panel
             </NotificationHeader>
-            {this.props.messages.map(msg=> <Message key={msg.text} style={{ background: this.props.theme == 'light' ? '#4d79ff' : 'palevioletred' }}>{msg.text}</Message>)}
+            {this.props.messages.map(msg=> <Message key={msg.text} style={{ background: msg.type == 'Proximity' ? '#ff6666' : '#4d79ff' }}>{msg.text}</Message>)}
             </NotiPanel>
     }
 }
