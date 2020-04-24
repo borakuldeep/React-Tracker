@@ -75,6 +75,10 @@ animation: ${slidedown} 5s;
         this.changeTile = this.changeTile.bind(this);
     }
 
+    componentWillUnmount() {
+      clearInterval(interval);
+    }
+
     sendDeviceUpdates() {
         //console.log("this.state = ", this.state);
         let devices = JSON.parse(JSON.stringify(this.state.devices));
@@ -230,14 +234,13 @@ checkCloseness(marker, area) {
     return (
       <Map center={position} zoom="10" style={{width: "100%", height: "100vh"}} onContextMenu={this.createArea}>
         <Header>React Tracker Demo <div style={{fontSize: '0.7rem'}}> by Kuldeep Bora</div></Header>
-        <Info> Right click on map to create tracking areas...</Info>
         <TileLayer
           attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url={this.state.tile.url}
         />
         {this.state.devices.map(item =>  <Marker position={[item.lat, item.long]} key={item.name}><Tooltip>{item.name}</Tooltip></Marker>)}
         {this.state.areas.map(item => <Rectangle key={item.name} bounds={item.loc}><Tooltip>{item.name}</Tooltip></Rectangle>)}
-        <Buttons clear={this.clearAreas} reset={this.resetDevices} tile={this.changeTile} />
+        <Buttons clear={this.clearAreas} reset={this.resetDevices} tile={this.changeTile} theme={this.state.theme}/>
         <Noti messages={this.state.notifications} theme={this.state.theme}/> 
       </Map>
     )

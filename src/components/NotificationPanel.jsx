@@ -9,7 +9,7 @@ height: 95vh;
 margin-top:10px;
 margin-bottom: 5px;
 background: white;
-opacity: 70%;
+opacity: 90%;
 margin-left: 80%;
 position: absolute;
 z-index: 600;
@@ -48,10 +48,11 @@ width: 270px;
 
 const NotificationHeader = styled.div`
 padding: 3px;
-background: white;
+background: grey;
 font-weight: bold;
 border-top-left-radius:9px;
 border-top-right-radius:9px;
+color: white;
 `
 
 class NotificationPanel extends React.Component {
@@ -59,7 +60,7 @@ class NotificationPanel extends React.Component {
 
     render() {
         return <NotiPanel style={{ border: this.props.theme == 'light' ? '1px solid black' : '1px solid white' }}> 
-            <NotificationHeader style={{ background: this.props.theme == 'light' ? 'black' :'white', color: this.props.theme == 'light' ? 'white' :'black'}}> 
+            <NotificationHeader /*style={{ background: this.props.theme == 'light' ? 'black' :'white', color: this.props.theme == 'light' ? 'white' :'black'}}*/> 
                 Notification Panel
             </NotificationHeader>
             {this.props.messages.map(msg=> <Message key={msg.text} style={{ background: msg.type == 'Proximity' ? '#ff6666' : '#4d79ff' }}>{msg.text}</Message>)}
